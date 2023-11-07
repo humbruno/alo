@@ -2,7 +2,7 @@ import './App.css';
 
 function App() {
   async function test() {
-    await fetch(`${location.origin}/api/calculate`, {
+    const res = await fetch(`${location.origin}/api/calculate`, {
       method: 'GET',
       mode: 'cors',
       cache: 'no-cache',
@@ -11,6 +11,8 @@ function App() {
       },
       referrerPolicy: 'no-referrer',
     });
+
+    console.log(res);
   }
 
   return (
