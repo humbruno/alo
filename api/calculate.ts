@@ -8,8 +8,14 @@ export default async function (
   switch (request.method) {
     case 'POST':
       const parsed = calculateFormSchema.safeParse(request.body);
-      console.log(parsed);
-      response.status(200).send({ message: parsed });
+
+      if (!parsed.success) {
+        return response.status(400).send({
+          message: `Yo, bad payload!`,
+        });
+      }
+
+      response.status(200).send({ message: 'all good' });
       break;
     default:
       response.status(501).send({ message: 'method not implemented' });
