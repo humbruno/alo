@@ -3,7 +3,7 @@ import './App.css';
 function App() {
   async function test() {
     await fetch(`${location.origin}/api/calculate`, {
-      method: 'POST',
+      method: 'GET',
       mode: 'cors',
       cache: 'no-cache',
       headers: {
