@@ -10,7 +10,6 @@ function App() {
         'Content-Type': 'application/json',
       },
       referrerPolicy: 'no-referrer',
-      body: JSON.stringify({}),
     });
   }
 
