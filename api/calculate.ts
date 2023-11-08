@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import type { MailDataRequired } from '@sendgrid/mail';
 import { z } from 'zod';
@@ -18,7 +20,7 @@ async function sendEmail(body: z.infer<typeof requestBodySchema>) {
     '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'
   );
 
-  const { firstName, lastName, company, email, phone, postCode, city } = body;
+  const { firstName, lastName, company } = body;
 
   const message: MailDataRequired = {
     text: 'and easy to do anywhere, even with Node.js',
