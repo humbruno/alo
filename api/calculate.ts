@@ -3,22 +3,23 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import sgMail, { type MailDataRequired } from '@sendgrid/mail';
 import { z } from 'zod';
+import { calculateFormSchema } from '../src/validations/index.ts';
 
-const requestBodySchema = z.object({
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-  company: z.string().optional(),
-  email: z.string().email(),
-  phone: z.string(),
-  postCode: z.string().min(1),
-  city: z.string().optional(),
-  disclaimer: z
-    .boolean({ required_error: 'calculateForm.requiredField' })
-    .refine((data) => data === true),
-});
+// const requestBodySchema = z.object({
+//   firstName: z.string().optional(),
+//   lastName: z.string().optional(),
+//   company: z.string().optional(),
+//   email: z.string().email(),
+//   phone: z.string(),
+//   postCode: z.string().min(1),
+//   city: z.string().optional(),
+//   disclaimer: z
+//     .boolean({ required_error: 'calculateForm.requiredField' })
+//     .refine((data) => data === true),
+// });
 
-async function sendEmail(body: z.infer<typeof requestBodySchema>) {
-  sgMail.setApiKey(process.env.API_KEY);
+async function sendEmail(body: z.infer<typeof calculateFormSchema>) {
+  sgMail.setApiKey(process.env.API_KEY ?? '');
 
   const { firstName, lastName, company } = body;
 
@@ -42,13 +43,7 @@ export default async function (
     case 'OPTIONS':
       return response.status(200).send({ message: 'CORS ok' });
     case 'POST':
-      // eslint-disable-next-line no-case-declarations
-      const parsedData = requestBodySchema.safeParse(request.body);
-
-      if (!parsedData.success)
-        return response.status(400).send(parsedData.error.errors);
-
-      await handlePostContact(request, response);
+      response.status(200).send({ body: 'bruno ok' });
       break;
     default:
       return response.status(501).send({ message: 'Invalid method' });
