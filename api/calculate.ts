@@ -19,7 +19,7 @@ const requestBodySchema = z.object({
 
 async function sendEmail(body: z.infer<typeof requestBodySchema>) {
   sgMail.setApiKey(
-    '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'
+    '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'
   );
 
   const { firstName, lastName, company } = body;
