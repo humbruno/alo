@@ -12,12 +12,15 @@ const requestBodySchema = z.object({
   phone: z.string(),
   postCode: z.string().min(1),
   city: z.string().optional(),
+  disclaimer: z
+    .boolean({ required_error: 'calculateForm.requiredField' })
+    .refine((data) => data === true),
 });
 
 async function sendEmail(body: z.infer<typeof requestBodySchema>) {
   const sgMail = require('@sendgrid/mail');
   sgMail.setApiKey(
-    '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'
+    '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'
   );
 
   const { firstName, lastName, company } = body;
@@ -29,12 +32,6 @@ async function sendEmail(body: z.infer<typeof requestBodySchema>) {
     to: 'bruno.santos@sitewerk.ch',
     from: 'info@sitewerk.ch',
     subject: 'Risto Development',
-    templateId: 'd-d7a3927de3c84f3ea2ea0924de2fb7d4',
-    dynamicTemplateData: {
-      firstName,
-      lastName,
-      company,
-    },
   };
 
   return sgMail.send(message);
