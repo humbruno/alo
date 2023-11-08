@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-const { calculateFormSchema } = require('../src/validations/index');
+import { calculateFormSchema } from '../src/validations/index';
 
 // const calculateFormSchema = z.object({
 //   firstName: z.string().optional(),
