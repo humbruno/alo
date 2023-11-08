@@ -23,7 +23,7 @@ const App = () => {
   }
 
   return (
-    <div className="w-11/12 min-h-screen flex items-center justify-center bg-teal-400">
+    <div className="w-11/12 min-h-screen flex items-center justify-center bg-teal-100">
       <form
         className="flex flex-col gap-5 max-w-7xl"
         onSubmit={handleSubmit(onSubmit)}
