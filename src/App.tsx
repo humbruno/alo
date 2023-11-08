@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { calculateFormSchema } from './validations';
 import { Form } from './components/form';
 import { sendCalculateEmail } from './services/sendCalculateEmail';
+import { calculateFormSchema } from '../validations';
 
 type TFormSchema = z.infer<typeof calculateFormSchema>;
 
