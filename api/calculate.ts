@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import type { MailDataRequired } from '@sendgrid/mail';
+import sgMail, { type MailDataRequired } from '@sendgrid/mail';
 import { z } from 'zod';
 
 const requestBodySchema = z.object({
@@ -18,7 +18,6 @@ const requestBodySchema = z.object({
 });
 
 async function sendEmail(body: z.infer<typeof requestBodySchema>) {
-  const sgMail = require('@sendgrid/mail');
   sgMail.setApiKey(
     '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'
   );
