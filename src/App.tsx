@@ -3,7 +3,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Form } from './components/form';
 import { sendCalculateEmail } from './services/sendCalculateEmail';
-import { calculateFormSchema } from '../api/calculate.ts';
+
+const calculateFormSchema = z.object({
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
+  company: z.string().optional(),
+  email: z.string().email('calculateForm.invalidEmail'),
+  phone: z.string({ invalid_type_error: 'calculateForm.requiredField' }),
+  postCode: z.string().min(1, 'calculateForm.requiredField'),
+  city: z.string().optional(),
+  disclaimer: z
+    .boolean({ required_error: 'calculateForm.requiredField' })
+    .refine((data) => data === true),
+});
 
 type TFormSchema = z.infer<typeof calculateFormSchema>;
 
