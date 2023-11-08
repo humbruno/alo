@@ -10,7 +10,6 @@ export async function sendCalculateEmail(body: any) {
     referrerPolicy: 'no-referrer',
     body: JSON.stringify({
       ...body,
-      email: null,
     }),
   });
 }

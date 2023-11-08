@@ -29,7 +29,7 @@ export default async function (
         });
       }
 
-      response.status(200).send({ message: JSON.stringify(parsed) });
+      response.status(200).send({ message: parsed });
       break;
     default:
       response.status(501).send({ message: 'method not implemented' });
