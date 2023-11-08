@@ -20,6 +20,7 @@ export default async function (
 ) {
   switch (request.method) {
     case 'POST':
+      // eslint-disable-next-line no-case-declarations
       const parsed = calculateFormSchema.safeParse(request.body);
       console.log(parsed);
 

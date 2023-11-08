@@ -1,5 +1,4 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { z } from 'zod';
 import { calculateFormSchema } from '../src/validations/index';
 
 // const calculateFormSchema = z.object({
@@ -21,6 +20,7 @@ export default async function (
 ) {
   switch (request.method) {
     case 'POST':
+      // eslint-disable-next-line no-case-declarations
       const parsed = calculateFormSchema.safeParse(request.body);
 
       if (!parsed.success) {
