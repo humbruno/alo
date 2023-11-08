@@ -29,8 +29,8 @@ async function sendEmail(body: z.infer<typeof requestBodySchema>) {
     text: 'and easy to do anywhere, even with Node.js',
     html: '<strong>and easy to do anywhere, even with Node.js</strong>',
 
-    to: 'bruno.santos@sitewerk.ch',
-    from: 'info@sitewerk.ch',
+    to: 'hsbruno1@gmail.com',
+    from: 'hsbruno1@gmail.com',
     subject: 'Risto Development',
   };
 
