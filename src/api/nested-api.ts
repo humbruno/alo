@@ -1,5 +1,4 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { z } from 'zod';
 import { calculateFormSchema } from '../validations';
 
 // const calculateFormSchema = z.object({
@@ -22,6 +21,7 @@ export default async function (
   switch (request.method) {
     case 'POST':
       const parsed = calculateFormSchema.safeParse(request.body);
+      console.log(parsed);
 
       response.status(200).send({ message: 'hello from nested api' });
       break;
