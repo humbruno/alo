@@ -3,7 +3,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import sgMail, { type MailDataRequired } from '@sendgrid/mail';
 import { z } from 'zod';
-import { calculateFormSchema } from '../src/validations/index.ts';
+import { calculateFormSchema } from '../src/validations/index.js';
 
 // const requestBodySchema = z.object({
 //   firstName: z.string().optional(),
