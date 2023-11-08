@@ -1,38 +1,73 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { MailDataRequired } from '@sendgrid/mail';
 import { z } from 'zod';
 
-export const calculateFormSchema = z.object({
+const requestBodySchema = z.object({
   firstName: z.string().optional(),
   lastName: z.string().optional(),
   company: z.string().optional(),
-  email: z.string().email('calculateForm.invalidEmail'),
-  phone: z.string({ invalid_type_error: 'calculateForm.requiredField' }),
-  postCode: z.string().min(1, 'calculateForm.requiredField'),
+  email: z.string().email(),
+  phone: z.string(),
+  postCode: z.string().min(1),
   city: z.string().optional(),
-  disclaimer: z
-    .boolean({ required_error: 'calculateForm.requiredField' })
-    .refine((data) => data === true),
 });
+
+async function sendEmail(body: z.infer<typeof requestBodySchema>) {
+  const sgMail = require('@sendgrid/mail');
+  sgMail.setApiKey(
+    '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'
+  );
+
+  const { firstName, lastName, company, email, phone, postCode, city } = body;
+
+  const message: MailDataRequired = {
+    text: 'and easy to do anywhere, even with Node.js',
+    html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+
+    to: 'bruno.santos@sitewerk.ch',
+    from: 'info@sitewerk.ch',
+    subject: 'Risto Development',
+    templateId: 'd-d7a3927de3c84f3ea2ea0924de2fb7d4',
+    dynamicTemplateData: {
+      firstName,
+      lastName,
+      company,
+    },
+  };
+
+  return sgMail.send(message);
+}
 
 export default async function (
   request: VercelRequest,
   response: VercelResponse
 ) {
   switch (request.method) {
+    case 'OPTIONS':
+      return response.status(200).send({ message: 'CORS ok' });
     case 'POST':
       // eslint-disable-next-line no-case-declarations
-      const parsed = calculateFormSchema.safeParse(request.body);
+      const parsedData = requestBodySchema.safeParse(request.body);
 
-      if (!parsed.success) {
-        return response.status(400).send({
-          message: `Yo, bad payload!`,
-        });
-      }
+      if (!parsedData.success)
+        return response.status(400).send(parsedData.error.errors);
 
-      response.status(200).send({ message: parsed });
+      await handlePostContact(request, response);
       break;
     default:
-      response.status(501).send({ message: 'method not implemented' });
-      break;
+      return response.status(501).send({ message: 'Invalid method' });
   }
 }
+
+const handlePostContact = async (
+  request: VercelRequest,
+  response: VercelResponse
+) => {
+  try {
+    await sendEmail(request.body);
+    response.status(200).send({ body: 'Email sent' });
+  } catch (error) {
+    console.log(error);
+    response.status(400).send(error);
+  }
+};
