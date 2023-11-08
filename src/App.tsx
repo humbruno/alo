@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Form } from './components/form';
 import { sendCalculateEmail } from './services/sendCalculateEmail';
-import { calculateFormSchema } from '../validations';
+import { calculateFormSchema } from '../api/calculate.ts';
 
 type TFormSchema = z.infer<typeof calculateFormSchema>;
 
