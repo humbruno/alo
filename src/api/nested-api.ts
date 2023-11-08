@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
-import { calculateFormSchema } from '../src/validations/index';
+import { calculateFormSchema } from '../validations';
 
 // const calculateFormSchema = z.object({
 //   firstName: z.string().optional(),
