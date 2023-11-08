@@ -43,7 +43,13 @@ export default async function (
     case 'OPTIONS':
       return response.status(200).send({ message: 'CORS ok' });
     case 'POST':
-      response.status(200).send({ body: 'bruno ok' });
+      // eslint-disable-next-line no-case-declarations
+      const parsedData = calculateFormSchema.safeParse(request.body);
+
+      if (!parsedData.success)
+        return response.status(400).send(parsedData.error.errors);
+
+      await handlePostContact(request, response);
       break;
     default:
       return response.status(501).send({ message: 'Invalid method' });
@@ -56,7 +62,7 @@ const handlePostContact = async (
 ) => {
   try {
     await sendEmail(request.body);
-    response.status(200).send({ body: 'Email sent' });
+    response.status(200).send({ body: 'bruno ok' });
   } catch (error) {
     console.log(error);
     response.status(400).send(error);
